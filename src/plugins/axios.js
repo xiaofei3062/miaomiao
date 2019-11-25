@@ -26,10 +26,12 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function (response) {
     // 保证最少500毫秒的加载时间
-    setTimeout(() => {
-      Toast.clear();
-    }, 500);
-    return response.data;
+    if (response.data.msg === "ok") {
+      setTimeout(() => {
+        Toast.clear();
+      }, 500);
+      return response.data;
+    }
   },
   function (error) {
     return Promise.reject(error);

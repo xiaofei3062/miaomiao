@@ -85,7 +85,88 @@
 
 <script>
   export default {
-    name: "City"
+    name: "City",
+    data() {
+      return {
+        cityList: []
+      };
+    },
+    mounted() {
+      axios.get("/api//cityList").then(res => {
+        // console.log(res.data);
+        let cities = res.data.cities;
+        this.formatCityList(cities);
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+    methods: {
+      formatCityList(cities) {
+        let cityList = [];
+        let hotList = [];
+
+        for (let i = 0; i < cities.length; i++) {
+          if (cities[i].isHot === 1) {
+            hotList.push(cities[i]);
+          }
+        }
+
+        for (let i = 0; i < cities.length; i++) {
+          let firstLetter = cities[i].py.substring(0, 1).toUpperCase();
+          if (toCom(firstLetter)) {  //新添加index
+            cityList.push(
+              {
+                index: firstLetter,
+                list: [
+                  {
+                    nm: cities[i].nm,
+                    id: cities[i].id
+                  }
+                ]
+              });
+          } else {   //累加到已有index中
+            for (let j = 0; j < cityList.length; j++) {
+              if (cityList[j].index === firstLetter) {
+                cityList[j].list.push(
+                  {
+                    nm: cities[i].nm,
+                    id: cities[i].id
+                  }
+                );
+              }
+            }
+          }
+        }
+
+        // 索引排序
+        cityList.sort((a, b) => {
+          if (a.index > b.index) {
+            return 1;
+          } else if (a.index < b.index) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
+        function toCom(firstLetter) {
+          for (let i = 0; i < cityList.length; i++) {
+            if (cityList[i].index === firstLetter) {
+              return false;
+            }
+          }
+          return true;
+        }
+
+        console.log(cityList, hotList);
+
+        return {
+          cityList,
+          hotList
+        };
+
+      }
+    }
   };
 </script>
 
