@@ -14,7 +14,7 @@ module.exports = {
       mediaQuery: true,
       minPixelValue: 1
     },
-    "cssnano": {
+    cssnano: {
       "cssnano-preset-advanced": {
         zindex: false,
         autoprefixer: false

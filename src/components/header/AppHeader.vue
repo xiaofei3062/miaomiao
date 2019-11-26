@@ -1,43 +1,43 @@
 <template>
   <header id="header">
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
   </header>
 </template>
 
 <script>
-  export default {
-    name: "AppHeader",
-    props: {
-      title: {
-        type: String,
-        default: "喵喵电影"
-      }
+export default {
+  name: "AppHeader",
+  props: {
+    title: {
+      type: String,
+      default: "喵喵电影"
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
-  #header {
-    width: 100%;
-    height: 50px;
-    color: #ffffff;
-    background: #e54847;
-    border-bottom: 1px solid #e54847;
-    position: relative;
-  }
+#header {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  color: #ffffff;
+  border-bottom: 1px solid #e54847;
+  background: #e54847;
+}
 
-  #header h1 {
-    font-size: 18px;
-    text-align: center;
-    line-height: 50px;
-    font-weight: normal;
-  }
+#header h1 {
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 50px;
+  text-align: center;
+}
 
-  #header i {
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    margin-top: -13px;
-    font-size: 26px;
-  }
+#header i {
+  font-size: 26px;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  margin-top: -13px;
+}
 </style>

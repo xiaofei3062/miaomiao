@@ -11,20 +11,20 @@ let config = {
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
-  function (config) {
+  function(config) {
     Toast.loading({
       forbidClick: true,
       message: "加载中..."
     });
     return config;
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   }
 );
 
 _axios.interceptors.response.use(
-  function (response) {
+  function(response) {
     // 保证最少500毫秒的加载时间
     if (response.data.msg === "ok") {
       setTimeout(() => {
@@ -33,12 +33,12 @@ _axios.interceptors.response.use(
       return response.data;
     }
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   }
 );
 
-Plugin.install = function (Vue, options) {
+Plugin.install = function(Vue, options) {
   Vue.axios = _axios;
   window.axios = _axios;
   Object.defineProperties(Vue.prototype, {
