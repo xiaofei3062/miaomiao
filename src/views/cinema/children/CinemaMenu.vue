@@ -1,13 +1,13 @@
 <template>
   <div class="cinema_menu">
     <div class="city_switch">
-      全城 <i class="iconfont icon-lower-triangle"></i>
+      全城 <i class="iconfont icon-lower-triangle" />
     </div>
     <div class="brand_swtich">
-      品牌 <i class="iconfont icon-lower-triangle"></i>
+      品牌 <i class="iconfont icon-lower-triangle" />
     </div>
     <div class="feature_switch">
-      特色 <i class="iconfont icon-lower-triangle"></i>
+      特色 <i class="iconfont icon-lower-triangle" />
     </div>
   </div>
 </template>

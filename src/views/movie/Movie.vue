@@ -1,18 +1,18 @@
 <template>
   <div id="main">
-    <app-header></app-header>
+    <app-header />
     <div id="content">
 
       <!-- 二级导航 -->
-      <movie-menu></movie-menu>
+      <movie-menu />
 
       <!-- 路由切换 -->
       <keep-alive>
-        <router-view></router-view>
+        <router-view />
       </keep-alive>
 
     </div>
-    <tab-bar></tab-bar>
+    <tab-bar />
   </div>
 </template>
 

@@ -1,18 +1,18 @@
 <template>
   <div id="main">
-    <app-header title="喵喵影院"></app-header>
+    <app-header title="喵喵影院" />
     <div id="content">
 
       <!-- 二级导航 -->
-      <cinema-menu></cinema-menu>
+      <cinema-menu />
 
       <!-- 路由切换 -->
       <keep-alive>
-        <router-view></router-view>
+        <router-view />
       </keep-alive>
 
     </div>
-    <tab-bar></tab-bar>
+    <tab-bar />
   </div>
 </template>
 

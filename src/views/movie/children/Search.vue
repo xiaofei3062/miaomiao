@@ -2,7 +2,7 @@
   <div class="search_body">
     <div class="search_input">
       <div class="search_input_wrapper">
-        <i class="iconfont icon-sousuo"></i>
+        <i class="iconfont icon-sousuo" />
         <input placeholder="请点击搜索按钮搜索内容" type="text" v-model.lazy="message">
       </div>
     </div>

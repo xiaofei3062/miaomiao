@@ -18,7 +18,11 @@
     </div>
     <div class="city_index">
       <ul>
-        <li :key="barIndex" @touchstart="handleToIndex(barIndex)" v-for="(bar,barIndex) in cityList">{{bar.index}}</li>
+        <li
+          :key="barIndex"
+          @touchstart="handleToIndex(barIndex)"
+          v-for="(bar,barIndex) in cityList">{{bar.index}}
+        </li>
       </ul>
     </div>
   </div>

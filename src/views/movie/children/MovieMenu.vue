@@ -1,14 +1,14 @@
 <template>
   <div class="movie_menu">
     <router-link active-class="active" class="city_name" tag="div" to="/movie/city">
-      <span>大连</span><i class="iconfont icon-lower-triangle"></i>
+      <span>大连</span><i class="iconfont icon-lower-triangle" />
     </router-link>
     <div class="hot_swtich">
       <router-link active-class="active" class="hot_item" tag="div" to="/movie/nowPlaying">正在热映</router-link>
       <router-link active-class="active" class="hot_item" tag="div" to="/movie/comingSoon">即将上映</router-link>
     </div>
     <router-link active-class="active" class="search_entry" tag="div" to="/movie/search">
-      <i class="iconfont icon-sousuo"></i>
+      <i class="iconfont icon-sousuo" />
     </router-link>
   </div>
 </template>
