@@ -8,6 +8,11 @@ import store from "./store";
 
 Vue.use(Vant);
 
+// 全局过滤器
+Vue.filter("setPicWidth", (url, arg) => {
+  return url.replace(/w\.h/, arg);
+});
+
 Vue.config.productionTip = false;
 
 new Vue({

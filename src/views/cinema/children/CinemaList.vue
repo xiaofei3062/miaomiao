@@ -1,97 +1,80 @@
 <template>
   <div class="cinema_body">
     <ul>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span>大地影院(澳东世纪店)</span>
-          <span class="q"><span class="price">22.9</span> 元起</span>
-        </div>
-        <div class="address">
-          <span>金州区大连经济技术开发区澳东世纪3层</span>
-          <span>1763.5km</span>
-        </div>
-        <div class="card">
-          <div>小吃</div>
-          <div>折扣卡</div>
-        </div>
-      </li>
+      <template v-for="(item,index) in cinemaList">
+        <li :key="index">
+          <div>
+            <span>{{item.nm | filterName}}</span>
+            <span class="q"><span class="price">{{Number(item.sellPrice).toFixed(1)}}</span> 元起</span>
+          </div>
+          <div class="address">
+            <span>{{item.addr | filterAddr}}</span>
+            <span>{{item.distance}}</span>
+          </div>
+          <div class="card">
+            <template v-for="(num,key) in item.tag" v-if="num === 1">
+              <div :class="key | filterColor" :key="key">{{key | filterKey}}</div>
+            </template>
+          </div>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
 
 <script>
   export default {
-    name: "CinemaList"
+    name: "CinemaList",
+    data() {
+      return {
+        cinemaList: []
+      };
+    },
+    filters: {
+      // 过滤地址
+      filterAddr(addr) {
+        if (addr.length >= 18) {
+          return addr.substr(0, 18) + "...";
+        }
+        return addr;
+      },
+      // 过滤电影名称
+      filterName(name) {
+        if (name.length >= 15) {
+          return name.substr(0, 15) + "...";
+        }
+        return name;
+      },
+      // 过滤卡片
+      filterKey(key) {
+        const card = [
+          { key: "allowRefund", val: "改签" },
+          { key: "endorse", val: "退票" },
+          { key: "sell", val: "折扣卡" },
+          { key: "snack", val: "小吃" }
+        ];
+
+        for (let i = 0; i < card.length; i++) {
+          if (card[i].key === key) {
+            return card[i].val;
+          }
+        }
+        return "";
+      },
+      // 过滤卡片颜色
+      filterColor(key) {
+        if (key === "allowRefund" || key === "endorse") {
+          return "bl";
+        }
+        return "ol";
+      }
+    },
+    mounted() {
+      axios.get("/api/cinemaList?cityId=10").then(res => {
+        // console.log(res.data.cinemas);
+        this.cinemaList = res.data.cinemas;
+      });
+    }
   };
 </script>
 
@@ -117,6 +100,7 @@
   .cinema_body .q {
     font-size: 11px;
     color: #f03d37;
+    margin-left: 5px;
   }
 
   .cinema_body .price {
@@ -137,14 +121,13 @@
   }
 
   .cinema_body .card div {
-    padding: 0 3px;
-    height: 15px;
-    line-height: 15px;
+    padding: 2px 3px;
     border-radius: 2px;
     color: #ff9900;
     border: 1px solid #ff9900;
     font-size: 13px;
     margin-right: 5px;
+    text-align: center;
   }
 
   .cinema_body .card div.or {

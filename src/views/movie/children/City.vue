@@ -4,80 +4,21 @@
       <div class="city_hot">
         <h2>热门城市</h2>
         <ul class="clearfix">
-          <li>上海</li>
-          <li>北京</li>
-          <li>上海</li>
-          <li>北京</li>
-          <li>上海</li>
-          <li>北京</li>
-          <li>上海</li>
-          <li>北京</li>
+          <li :key="hotIndex" v-for="(hot,hotIndex) in hotList">{{hot.nm}}</li>
         </ul>
       </div>
-      <div class="city_sort">
-        <div>
-          <h2>A</h2>
-          <ul>
-            <li>阿拉善盟</li>
-            <li>鞍山</li>
-            <li>安庆</li>
-            <li>安阳</li>
-          </ul>
-        </div>
-        <div>
-          <h2>B</h2>
-          <ul>
-            <li>北京</li>
-            <li>保定</li>
-            <li>蚌埠</li>
-            <li>包头</li>
-          </ul>
-        </div>
-        <div>
-          <h2>A</h2>
-          <ul>
-            <li>阿拉善盟</li>
-            <li>鞍山</li>
-            <li>安庆</li>
-            <li>安阳</li>
-          </ul>
-        </div>
-        <div>
-          <h2>B</h2>
-          <ul>
-            <li>北京</li>
-            <li>保定</li>
-            <li>蚌埠</li>
-            <li>包头</li>
-          </ul>
-        </div>
-        <div>
-          <h2>A</h2>
-          <ul>
-            <li>阿拉善盟</li>
-            <li>鞍山</li>
-            <li>安庆</li>
-            <li>安阳</li>
-          </ul>
-        </div>
-        <div>
-          <h2>B</h2>
-          <ul>
-            <li>北京</li>
-            <li>保定</li>
-            <li>蚌埠</li>
-            <li>包头</li>
+      <div class="city_sort" ref="citySort">
+        <div :key="cityIndex" v-for="(city,cityIndex) in cityList">
+          <h2>{{city.index}}</h2>
+          <ul :key="index" v-for="(item,index) in city.list">
+            <li>{{item.nm}}</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="city_index">
       <ul>
-        <li>A</li>
-        <li>B</li>
-        <li>C</li>
-        <li>D</li>
-        <li>E</li>
+        <li :key="barIndex" @touchstart="handleToIndex(barIndex)" v-for="(bar,barIndex) in cityList">{{bar.index}}</li>
       </ul>
     </div>
   </div>
@@ -88,14 +29,17 @@
     name: "City",
     data() {
       return {
-        cityList: []
+        cityList: [],
+        hotList: []
       };
     },
     mounted() {
       axios.get("/api//cityList").then(res => {
         // console.log(res.data);
         let cities = res.data.cities;
-        this.formatCityList(cities);
+        let { cityList, hotList } = this.formatCityList(cities);
+        this.cityList = cityList;
+        this.hotList = hotList;
       }).catch(err => {
         console.log(err);
       });
@@ -158,13 +102,17 @@
           return true;
         }
 
-        console.log(cityList, hotList);
+        // console.log(cityList, hotList);
 
         return {
           cityList,
           hotList
         };
 
+      },
+      handleToIndex(index) {
+        let h2 = this.$refs.citySort.getElementsByTagName("h2");
+        this.$refs.citySort.parentNode.scrollTop = h2[index].offsetTop;
       }
     }
   };
