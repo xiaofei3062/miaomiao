@@ -1,29 +1,33 @@
 <template>
   <div class="cinema_body">
-    <ul>
-      <template v-for="(item, index) in cinemaList">
-        <li :key="index">
-          <div>
-            <span>{{ item.nm | filterName }}</span>
-            <span class="q">
-              <span class="price">{{ Number(item.sellPrice).toFixed(1) }}</span>
-              元起
-            </span>
-          </div>
-          <div class="address">
-            <span>{{ item.addr | filterAddr }}</span>
-            <span>{{ item.distance }}</span>
-          </div>
-          <div class="card">
-            <template v-for="(num, key) in item.tag" v-if="num === 1">
-              <div :class="key | filterColor" :key="key">
-                {{ key | filterKey }}
-              </div>
-            </template>
-          </div>
-        </li>
-      </template>
-    </ul>
+    <my-scroll>
+      <ul>
+        <template v-for="(item, index) in cinemaList">
+          <li :key="index">
+            <div>
+              <span>{{ item.nm | filterName }}</span>
+              <span class="q">
+                <span class="price">
+                  {{ Number(item.sellPrice).toFixed(1) }}
+                </span>
+                元起
+              </span>
+            </div>
+            <div class="address">
+              <span>{{ item.addr | filterAddr }}</span>
+              <span>{{ item.distance }}</span>
+            </div>
+            <div class="card">
+              <template v-for="(num, key) in item.tag" v-if="num === 1">
+                <div :class="key | filterColor" :key="key">
+                  {{ key | filterKey }}
+                </div>
+              </template>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </my-scroll>
   </div>
 </template>
 
@@ -85,7 +89,7 @@ export default {
 
 <style scoped>
 #content .cinema_body {
-  overflow: auto;
+  overflow: hidden;
   flex: 1;
 }
 

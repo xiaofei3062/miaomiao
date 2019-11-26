@@ -5,6 +5,7 @@ import "vant/lib/index.css";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import MyScroll from "@/components/myScroll/MyScroll";
 
 Vue.use(Vant);
 
@@ -12,6 +13,9 @@ Vue.use(Vant);
 Vue.filter("setPicWidth", (url, arg) => {
   return url.replace(/w\.h/, arg);
 });
+
+// 全局组件
+Vue.component("MyScroll", MyScroll);
 
 Vue.config.productionTip = false;
 

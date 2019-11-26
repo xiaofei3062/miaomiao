@@ -1,37 +1,73 @@
 <template>
   <div class="movie_body">
-    <ul>
-      <li :key="movieIndex" v-for="(movie, movieIndex) in movieList">
-        <div class="pic_show">
-          <img :src="movie.img | setPicWidth('128.180')" alt="" />
-        </div>
-        <div class="info_list">
-          <h2>
-            {{ movie.nm }}
-            <img alt="" src="@/assets/images/maxs.png" v-if="movie.version" />
-          </h2>
-          <p>
-            观众评
-            <span class="grade">{{ Number(movie.sc).toFixed(1) }}</span>
-          </p>
-          <p>主演: {{ movie.star }}</p>
-          <p>{{ movie.showInfo }}</p>
-        </div>
-        <div class="btn_mall">
-          购票
-        </div>
-      </li>
-    </ul>
+    <my-scroll
+      :handleToScroll="handleToScroll"
+      :handleToTouchEnd="handleToTouchEnd"
+    >
+      <ul>
+        <li class="msg-show" v-show="msgShow">{{ pullDownMsg }}</li>
+        <li
+          :key="movieIndex"
+          @tap="handleToDetail"
+          v-for="(movie, movieIndex) in movieList"
+        >
+          <div class="pic_show">
+            <img :src="movie.img | setPicWidth('128.180')" alt="" />
+          </div>
+          <div class="info_list">
+            <h2>
+              {{ movie.nm }}
+              <img alt="" src="@/assets/images/maxs.png" v-if="movie.version" />
+            </h2>
+            <p>
+              观众评
+              <span class="grade">{{ Number(movie.sc).toFixed(1) }}</span>
+            </p>
+            <p>主演: {{ movie.star }}</p>
+            <p>{{ movie.showInfo }}</p>
+          </div>
+          <div class="btn_mall">
+            购票
+          </div>
+        </li>
+      </ul>
+    </my-scroll>
   </div>
 </template>
 
 <script>
+import BScroll from "better-scroll";
+
 export default {
   name: "NowPlaying",
   data() {
     return {
-      movieList: []
+      movieList: [],
+      pullDownMsg: "",
+      msgShow: false
     };
+  },
+  methods: {
+    handleToDetail() {
+      console.log("tap");
+    },
+    handleToScroll(pos) {
+      if (pos.y > 20) {
+        this.pullDownMsg = "数据更新中...";
+        this.msgShow = true;
+      }
+    },
+    handleToTouchEnd(pos) {
+      if (pos.y > 20) {
+        setTimeout(() => {
+          this.pullDownMsg = "数据更新成功";
+          setTimeout(() => {
+            this.msgShow = false;
+            this.pullDownMsg = "";
+          }, 1000);
+        }, 1000);
+      }
+    }
   },
   mounted() {
     axios
@@ -49,13 +85,23 @@ export default {
 
 <style scoped>
 #content .movie_body {
-  overflow: auto;
+  overflow: hidden;
   flex: 1;
 }
 
 .movie_body ul {
   overflow: hidden;
   margin: 0 12px;
+}
+
+.movie_body ul .msg-show {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+  border: none;
 }
 
 .movie_body ul li {

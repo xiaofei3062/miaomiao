@@ -1,22 +1,26 @@
 <template>
   <div class="city_body">
     <div class="city_list">
-      <div class="city_hot">
-        <h2>热门城市</h2>
-        <ul class="clearfix">
-          <li :key="hotIndex" v-for="(hot, hotIndex) in hotList">
-            {{ hot.nm }}
-          </li>
-        </ul>
-      </div>
-      <div class="city_sort" ref="citySort">
-        <div :key="cityIndex" v-for="(city, cityIndex) in cityList">
-          <h2>{{ city.index }}</h2>
-          <ul :key="index" v-for="(item, index) in city.list">
-            <li>{{ item.nm }}</li>
-          </ul>
+      <my-scroll ref="myScroll">
+        <div>
+          <div class="city_hot">
+            <h2>热门城市</h2>
+            <ul class="clearfix">
+              <li :key="hotIndex" v-for="(hot, hotIndex) in hotList">
+                {{ hot.nm }}
+              </li>
+            </ul>
+          </div>
+          <div class="city_sort" ref="citySort">
+            <div :key="cityIndex" v-for="(city, cityIndex) in cityList">
+              <h2>{{ city.index }}</h2>
+              <ul :key="index" v-for="(item, index) in city.list">
+                <li>{{ item.nm }}</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
+      </my-scroll>
     </div>
     <div class="city_index">
       <ul>
@@ -120,8 +124,10 @@ export default {
       };
     },
     handleToIndex(index) {
+      // h2是个类数组
       let h2 = this.$refs.citySort.getElementsByTagName("h2");
-      this.$refs.citySort.parentNode.scrollTop = h2[index].offsetTop;
+      // 调用BScroll封装的滚动到指定元素方法
+      this.$refs.myScroll.handleToElement(h2[index], 300);
     }
   }
 };

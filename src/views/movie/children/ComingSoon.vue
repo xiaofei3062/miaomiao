@@ -1,27 +1,29 @@
 <template>
   <div class="movie_body">
-    <ul>
-      <li :key="index" v-for="(item, index) in comingList">
-        <div class="pic_show">
-          <img :src="item.img | setPicWidth('128.180')" alt="" />
-        </div>
-        <div class="info_list">
-          <h2>
-            {{ item.nm }}
-            <img alt="" src="@/assets/images/maxs.png" v-if="item.version" />
-          </h2>
-          <p>
-            <span class="person">{{ item.wish }}</span>
-            人想看
-          </p>
-          <p>主演: {{ item.star }}</p>
-          <p>{{ item.rt }}上映</p>
-        </div>
-        <div class="btn_pre">
-          预售
-        </div>
-      </li>
-    </ul>
+    <my-scroll>
+      <ul>
+        <li :key="index" v-for="(item, index) in comingList">
+          <div class="pic_show">
+            <img :src="item.img | setPicWidth('128.180')" alt="" />
+          </div>
+          <div class="info_list">
+            <h2>
+              {{ item.nm }}
+              <img alt="" src="@/assets/images/maxs.png" v-if="item.version" />
+            </h2>
+            <p>
+              <span class="person">{{ item.wish }}</span>
+              人想看
+            </p>
+            <p>主演: {{ item.star }}</p>
+            <p>{{ item.rt }}上映</p>
+          </div>
+          <div class="btn_pre">
+            预售
+          </div>
+        </li>
+      </ul>
+    </my-scroll>
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
 
 <style scoped>
 #content .movie_body {
-  overflow: auto;
+  overflow: hidden;
   flex: 1;
 }
 
