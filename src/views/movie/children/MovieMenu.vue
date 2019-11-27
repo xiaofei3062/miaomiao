@@ -6,7 +6,7 @@
       tag="div"
       to="/movie/city"
     >
-      <span>大连</span>
+      <span>{{ $store.state.city.name }}</span>
       <i class="iconfont icon-lower-triangle" />
     </router-link>
     <div class="hot_swtich">

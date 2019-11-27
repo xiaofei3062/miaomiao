@@ -36,7 +36,8 @@ export default {
   name: "CinemaList",
   data() {
     return {
-      cinemaList: []
+      cinemaList: [],
+      prevCityId: -1
     };
   },
   filters: {
@@ -78,11 +79,23 @@ export default {
       return "ol";
     }
   },
-  mounted() {
-    axios.get("/api/cinemaList?cityId=10").then(res => {
-      // console.log(res.data.cinemas);
-      this.cinemaList = res.data.cinemas;
-    });
+  activated() {
+    const cityId = this.$store.state.city.id;
+    // id相同就不重复请求数据了
+    if (this.prevCityId === cityId) {
+      return false;
+    } else {
+      axios
+        .get("/api/cinemaList?cityId=" + cityId)
+        .then(res => {
+          // console.log(res.data.cinemas);
+          this.cinemaList = res.data.cinemas;
+          this.prevCityId = cityId;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>

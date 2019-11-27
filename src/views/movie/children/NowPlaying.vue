@@ -36,15 +36,14 @@
 </template>
 
 <script>
-import BScroll from "better-scroll";
-
 export default {
   name: "NowPlaying",
   data() {
     return {
       movieList: [],
       pullDownMsg: "",
-      msgShow: false
+      msgShow: false,
+      prevCityId: -1
     };
   },
   methods: {
@@ -69,16 +68,24 @@ export default {
       }
     }
   },
-  mounted() {
-    axios
-      .get("/api/movieOnInfoList?cityId=10")
-      .then(res => {
-        // console.log(res.data.movieList);
-        this.movieList = res.data.movieList;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  activated() {
+    const cityId = this.$store.state.city.id;
+
+    // id相同就不重复请求数据了
+    if (this.prevCityId === cityId) {
+      return false;
+    } else {
+      axios
+        .get("/api/movieOnInfoList?cityId=" + cityId)
+        .then(res => {
+          // console.log(res.data.movieList);
+          this.movieList = res.data.movieList;
+          this.prevCityId = cityId;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>

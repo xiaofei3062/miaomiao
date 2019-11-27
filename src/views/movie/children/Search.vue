@@ -60,8 +60,9 @@ export default {
   },
   watch: {
     message(newVal) {
+      const cityId = this.$store.state.city.id;
       axios
-        .get(`/api/searchList?cityId=10&kw=${newVal}`)
+        .get(`/api/searchList?cityId=${cityId}&kw=${newVal}`)
         .then(res => {
           let movies = res.data.movies;
           if (movies) {

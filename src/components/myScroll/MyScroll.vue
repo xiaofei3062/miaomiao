@@ -23,7 +23,7 @@ export default {
       }
     }
   },
-  mounted() {
+  activated() {
     this.$nextTick(() => {
       let scroll = new BScroll(this.$refs.wrapper, {
         tap: true,

@@ -6,7 +6,11 @@
           <div class="city_hot">
             <h2>热门城市</h2>
             <ul class="clearfix">
-              <li :key="hotIndex" v-for="(hot, hotIndex) in hotList">
+              <li
+                :key="hotIndex"
+                @tap="handleToHotCity(hot.nm, hot.id)"
+                v-for="(hot, hotIndex) in hotList"
+              >
                 {{ hot.nm }}
               </li>
             </ul>
@@ -14,7 +18,11 @@
           <div class="city_sort" ref="citySort">
             <div :key="cityIndex" v-for="(city, cityIndex) in cityList">
               <h2>{{ city.index }}</h2>
-              <ul :key="index" v-for="(item, index) in city.list">
+              <ul
+                :key="index"
+                @tap="handleToHotCity(item.nm, item.id)"
+                v-for="(item, index) in city.list"
+              >
                 <li>{{ item.nm }}</li>
               </ul>
             </div>
@@ -46,18 +54,32 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("/api/cityList")
-      .then(res => {
-        // console.log(res.data);
-        let cities = res.data.cities;
-        let { cityList, hotList } = this.formatCityList(cities);
-        this.cityList = cityList;
-        this.hotList = hotList;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // 获取城市数据本地存储
+    const cityList = localStorage.getItem("cityList");
+    const hotList = localStorage.getItem("hotList");
+
+    // 本地存储存在 就直接获取数据 否则请求数据
+    if (cityList && hotList) {
+      this.cityList = JSON.parse(cityList);
+      this.hotList = JSON.parse(hotList);
+    } else {
+      axios
+        .get("/api/cityList")
+        .then(res => {
+          // console.log(res.data);
+          let cities = res.data.cities;
+          let { cityList, hotList } = this.formatCityList(cities);
+          this.cityList = cityList;
+          this.hotList = hotList;
+
+          // 将数据本地存储 提升性能
+          localStorage.setItem("cityList", JSON.stringify(cityList));
+          localStorage.setItem("hotList", JSON.stringify(hotList));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   },
   methods: {
     formatCityList(cities) {
@@ -128,6 +150,17 @@ export default {
       let h2 = this.$refs.citySort.getElementsByTagName("h2");
       // 调用BScroll封装的滚动到指定元素方法
       this.$refs.myScroll.handleToElement(h2[index], 300);
+    },
+    handleToHotCity(name, id) {
+      this.$store.commit("city_info", { name, id });
+      this.$router.push("/movie/nowPlaying").catch(err => {
+        return false;
+      });
+      const obj = {
+        name,
+        id
+      };
+      localStorage.setItem("name_id", JSON.stringify(obj));
     }
   }
 };
