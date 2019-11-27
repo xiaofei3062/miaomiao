@@ -8,7 +8,7 @@
         <li class="msg-show" v-show="msgShow">{{ pullDownMsg }}</li>
         <li
           :key="movieIndex"
-          @tap="handleToDetail"
+          @tap="handleToDetail(movie.id)"
           v-for="(movie, movieIndex) in movieList"
         >
           <div class="pic_show">
@@ -47,8 +47,8 @@ export default {
     };
   },
   methods: {
-    handleToDetail() {
-      console.log("tap");
+    handleToDetail(movieId) {
+      this.$router.push("/movie/movieDetail/1/" + movieId).catch(err => {});
     },
     handleToScroll(pos) {
       if (pos.y > 20) {

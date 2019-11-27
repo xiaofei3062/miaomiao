@@ -10,8 +10,8 @@ import MyScroll from "@/components/myScroll/MyScroll";
 Vue.use(Vant);
 
 // 全局过滤器
-Vue.filter("setPicWidth", (url, arg) => {
-  return url.replace(/w\.h/, arg);
+Vue.filter("setPicWidth", (url, msg) => {
+  return url.replace(/w\.h/, msg);
 });
 
 // 全局组件

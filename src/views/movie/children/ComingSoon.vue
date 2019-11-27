@@ -2,7 +2,11 @@
   <div class="movie_body">
     <my-scroll>
       <ul>
-        <li :key="index" v-for="(item, index) in comingList">
+        <li
+          :key="index"
+          @tap="handleToDetail(item.id)"
+          v-for="(item, index) in comingList"
+        >
           <div class="pic_show">
             <img :src="item.img | setPicWidth('128.180')" alt="" />
           </div>
@@ -35,6 +39,11 @@ export default {
       comingList: [],
       prevCityId: -1
     };
+  },
+  methods: {
+    handleToDetail(movieId) {
+      this.$router.push("/movie/movieDetail/2/" + movieId).catch(err => {});
+    }
   },
   activated() {
     const cityId = this.$store.state.city.id;
