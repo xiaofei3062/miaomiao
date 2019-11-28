@@ -12,4 +12,5 @@ export default {
 
 <style>
 @import "./assets/css/common.css";
+@import "./assets/css/swiper.min.css";
 </style>

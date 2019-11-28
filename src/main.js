@@ -11,7 +11,11 @@ Vue.use(Vant);
 
 // 全局过滤器
 Vue.filter("setPicWidth", (url, msg) => {
-  return url.replace(/w\.h/, msg);
+  try {
+    return url.replace(/w\.h/, msg);
+  } catch (e) {
+    return false;
+  }
 });
 
 // 全局组件

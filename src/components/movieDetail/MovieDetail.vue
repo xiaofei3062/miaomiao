@@ -5,7 +5,13 @@
     </app-header>
     <div class="contentDetail" id="content">
       <div class="detail_list">
-        <div class="detail_list_bg"></div>
+        <div
+          :style="{
+            'background-image':
+              'url(' + detailMovie.img.replace(/w\.h/, '148.208') + ')'
+          }"
+          class="detail_list_bg"
+        ></div>
         <div class="detail_list_filter"></div>
         <div class="detail_list_content">
           <div class="detail_list_img">
@@ -24,14 +30,16 @@
       <div class="detail_intro">
         <p>{{ detailMovie.dra }}</p>
       </div>
-      <div class="detail_player swiper-container">
+      <div class="detail_player swiper-container" ref="detail_player">
         <ul class="swiper-wrapper">
-          <li class="swiper-slide">
+          <li
+            :key="index"
+            class="swiper-slide"
+            v-for="(item, index) in detailMovie.photos"
+          >
             <div>
-              <img alt="" src="@/assets/images/person_1.webp" />
+              <img :src="item | setPicWidth('100.150')" alt="" />
             </div>
-            <p>陈建斌</p>
-            <p>马先勇</p>
           </li>
         </ul>
       </div>
@@ -62,7 +70,15 @@ export default {
     axios
       .get("/api/detailmovie?movieId=" + movieId)
       .then(res => {
+        // console.log(res.data.detailMovie);
         this.detailMovie = res.data.detailMovie;
+        this.$nextTick(() => {
+          new Swiper(this.$refs.detail_player, {
+            slidesPerView: "auto",
+            freeMode: true,
+            freeModeSticky: true
+          });
+        });
       })
       .catch(err => {
         console.log(err);
@@ -178,7 +194,7 @@ export default {
 
 .detail_player .swiper-slide {
   font-size: 14px;
-  width: 70px;
+  width: 100px;
   margin-right: 20px;
   text-align: center;
 }

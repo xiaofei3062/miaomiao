@@ -13,7 +13,7 @@ if (name_id) {
 export default {
   state: {
     name: obj.name || "合肥",
-    id: obj.id || 1
+    id: obj.id || 56
   },
   getters: {},
   mutations: {
