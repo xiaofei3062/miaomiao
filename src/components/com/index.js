@@ -1,7 +1,7 @@
 import Vue from "vue";
 import MessageBox from "./message/MessageBox";
 
-export const MessageBoxToast = (function() {
+export const MessageBoxToast = (function () {
   // 默认值
   let defaults = {
     title: "",
@@ -16,7 +16,7 @@ export const MessageBoxToast = (function() {
   let MyComponent = Vue.extend(MessageBox);
 
   // 配置参数
-  return function(options) {
+  return function (options) {
     // 将配置赋值给defaults
     for (let attr in options) {
       defaults[attr] = options[attr];
